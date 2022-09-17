@@ -1,0 +1,6 @@
+1. When the Homepage is first loaded it displays existing blog posts and the option to log in.
+2. Navigation links: Homepage, Dashboard, Logout.  
+   -When you first load the Homepage, if user clicks on the other 2 they're prompted to log in or sign up.
+   -If user chooses Sign Up, they're prompted to create a username and password.
+   -When they fill out their info and click on the Sign Up button, their credentials are saved and they're logged in.
+   -If user chooses Sign In, they're prompted to enter Username and Password.
