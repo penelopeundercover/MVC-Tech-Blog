@@ -2,7 +2,7 @@ const { Model, DataTypes } = require("sequelize");
 const bcrypt = require("bcrypt");
 const sequelize = require("../config/connection");
 
-class Post extends Model {}
+class BlogPost extends Model {}
 
 Post.init({
   id: {
@@ -12,6 +12,10 @@ Post.init({
   },
   title: {
     type: DataTypes.STRING,
+    allowNull: false,
+  },
+  body: {
+    type: DataTypes.TEXT,
     allowNull: false,
   },
   user_id: {
@@ -25,7 +29,7 @@ Post.init({
   timestamps: false,
   freezeTableName: true,
   underscored: true,
-  modelName: "post",
+  modelName: "blogPost",
 });
 
-module.exports = Post;
+module.exports = BlogPost;

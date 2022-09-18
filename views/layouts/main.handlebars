@@ -1,0 +1,50 @@
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fund My Project!</title>
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+
+  <body>
+    <header>
+      <h1>Tech Blog</h1>
+    </header>
+    <nav>
+      <a href="/main">Home</a>
+
+      {{#if loggedIn}}
+        <a href="/dashboard">Dashboard</a>
+
+        <button id="logout" class="btn-no-style">Logout</button>
+      {{else}}
+        <a href="/login">Login</a>
+      {{/if}}
+    </nav>
+
+    {{#each blogPosts as |blogPost|}}
+      <div class="row mb-4 blogPost">
+        <div class="col-md-5">
+          <h2>
+            <a href="/blogPost/{{blogPost.id}}">{{blogPost.title}}</a>
+          </h2>
+          <p>Posted by
+            {{blogPost.user.name}}
+            on
+            {{format_date blogPost.date_created}}</p>
+        </div>
+        <div class="col-md-7">
+          <p>
+            {{blogPost.body}}
+          </p>
+        </div>
+      </div>
+    {{/each}}
+
+    <!-- Render script for logged in users only -->
+    {{#if logged_in}}
+      <script src="/js/logout.js"></script>
+    {{/if}}
+  </body>
+</html>
