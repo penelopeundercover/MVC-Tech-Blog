@@ -1,17 +1,20 @@
 [
   {
+    "id": 1,
     "title": "Is JavaScript really the wild west?",
-    "body": "They told us that JavaScript is the wild west and you can do anything you want, but it doesn't feel that way to me. What do you think?",
+    "body": "They told us that JavaScript is the wild west and you can do anything you want, but I'm not feeling the freedom. When did JavaScript methods start to feel like handy tools you can utilize to accomplish something, rather than difficult concepts to try and learn?",
     "user_id": 27
   },
   {
-    "title": "Back end is more enjoyable than front end",
-    "body": "On the back end you don't have to spend forever trying to perfect the appearance of a UI, and I don't miss that at all!",
+    "id": 2,
+    "title": "Databases are fun!",
+    "body": "I love organizing things, and planning routes!",
     "user_id": 33
   },
   {
-    "title": "When did it stick?",
-    "body": "When did JavaScript methods start to feel like handy tools you can utilize to accomplish something, rather than difficult concepts to try and learn?",
-    "user-id": 49
+    "id": 3,
+    "title": "How to collaborate",
+    "body": "What elements make up a dynamic collaborating team? How can I be a better collaborator?",
+    "user_id": 49
   }
 ]
