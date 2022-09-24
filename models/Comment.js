@@ -15,7 +15,7 @@ Comment.init(
     body: {
       type: DataTypes.STRING,
     },
-    // post_id: {
+    // blogPost_id: {
     //   type: DataTypes.STRING,
     //   allowNull: false,
     //   references: {

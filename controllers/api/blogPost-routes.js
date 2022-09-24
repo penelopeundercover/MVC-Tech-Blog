@@ -1,24 +1,21 @@
 const router = require("express").Router();
-const { User, BlogPost, Comment } = require("../models");
+const { User, BlogPost, Comment } = require("../../models");
 
 //Get all blog posts
 router.get("/", async (req, res) => {
-  try {
-    const blogPostData = await BlogPost.findAll({
-      include: [
-        {
-          model: BlogPost,
-        },
-        {
-          model: Comment,
-          attributes: ["blogPost_id"],
-        },
-        {
-          model: User,
-          attributes: ["user_name"],
-        },
-      ],
-    });
+  const blogPostData = await BlogPost.findAll({
+    include: [
+      {
+        model: BlogPost,
+      },
+
+      {
+        model: User,
+        attributes: ["user_name"],
+      },
+    ],
+  });
+});
 
 //Get one blog post by id
 router.get("/:id", async (req, res) => {
@@ -30,11 +27,7 @@ router.get("/:id", async (req, res) => {
         },
         {
           model: Comment,
-          attributes: ["post_id"],
-        },
-        {
-          model: User,
-          attributes: ["user_name"],
+          attributes: ["blogPost_id"],
         },
       ],
     });
