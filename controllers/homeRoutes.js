@@ -4,29 +4,31 @@ const withAuth = require("../utils/auth");
 
 //Get all blog posts
 router.get("/", async (req, res) => {
+  console.log("dinosaurs");
   try {
     const blogPostData = await BlogPost.findAll({
       include: [
-        {
-          model: BlogPost,
-        },
         {
           model: Comment,
           attributes: ["blogPost_id"],
         },
         {
           model: User,
-          attributes: ["user_name"],
+          attributes: ["name"],
         },
       ],
     });
 
     //Serialize data so the template can read it
-    const users = blogPostData.map((blogPost) => blogPost.get({ plain: true }));
+    const blogPosts = blogPostData.map((blogPost) =>
+      blogPost.get({ plain: true })
+    );
+
+    console.log(blogPosts);
 
     //Pass serialized data and session flag into template
-    res.render("homepage", {
-      BlogPost,
+    res.render("blogPosts", {
+      blogPosts,
       logged_in: req.session.logged_in,
     });
   } catch (err) {
@@ -35,33 +37,24 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/:id", async (req, res) => {
-  try {
-    const blogPostData = await BlogPost.findByPk(req.params.id, {
-      include: [
-        {
-          model: BlogPost,
-        },
-        {
-          model: Comment,
-          attributes: ["post_id"],
-        },
-        {
-          model: User,
-          attributes: ["user_name"],
-        },
-      ],
-    });
-    const project = blogPostData.get({ plain: true });
-
-    res.render("blogPost", {
-      ...BlogPost,
-      logged_in: req.session.logged_in,
-    });
-  } catch (err) {
-    res.status(500).json(err);
+//If they're logged in, route to the homepage. If not, route to the login page.
+router.get("/login", async (req, res) => {
+  if (req.session.logged_in) {
+    res.redirect("/");
+    return;
   }
+  res.render("login");
 });
+
+//If they're logged in, route to the homepage. If not, route to the signup page.
+router.get("/signup", async (req, res) => {
+  if (req.session.logged_in) {
+    res.redirect("/");
+    return;
+  }
+  res.render("signup");
+});
+
 // Use withAuth middleware to prevent access to route
 router.get("/profile", withAuth, async (req, res) => {
   try {
