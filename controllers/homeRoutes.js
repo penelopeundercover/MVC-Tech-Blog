@@ -85,4 +85,35 @@ router.get("/login", (req, res) => {
   res.render("login");
 });
 
+//Get one blog post by id
+router.get("/blogPost/:id", async (req, res) => {
+  console.log(req.params.id);
+  try {
+    const blogPostData = await BlogPost.findByPk(req.params.id, {
+      include: [
+        User,
+        {
+          model: Comment,
+          include: [User],
+        },
+      ],
+    });
+
+    console.log(blogPostData);
+
+    if (!blogPostData) {
+      res.status(404).json({ message: "No blog post found with that id." });
+      return;
+    }
+
+    //Serialize data so the template can read it
+    const blogPost = blogPostData.get({ plain: true });
+
+    res.render("post", { blogPost });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
+
 module.exports = router;

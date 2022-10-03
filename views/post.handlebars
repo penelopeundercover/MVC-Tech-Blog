@@ -1,0 +1,40 @@
+<div>
+  <div class="row mb-4 blogPost">
+    <div class="col-md-5">
+      <h2>
+        {{blogPost.title}}
+      </h2>
+      <p>Posted by
+        {{blogPost.user.name}}
+        on
+        {{format_date blogPost.createdAt}}</p>
+    </div>
+    <div class="col-md-7">
+      <p>
+        {{blogPost.body}}
+      </p>
+    </div>
+  </div>
+  {{#if blogPost.comments}}
+    <div>
+      Comments
+    </div>
+    {{#each blogPost.comments}}
+      <div>
+        <p>Posted by
+          {{user.name}}
+          on
+          {{format_date createdAt}}</p>
+      </div>
+      <div class="col-md-7">
+        <p>
+          {{body}}
+        </p>
+      </div>
+    {{/each}}
+  {{/if}}
+</div>
+
+{{! *Add a comment form
+    *Add Comment <button>
+    *On the front-end code, have a click handler that will call an api route--post route--to add a comment to the Comments table, but also link it to the post. }}

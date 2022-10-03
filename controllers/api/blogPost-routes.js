@@ -11,37 +11,10 @@ router.get("/", async (req, res) => {
 
       {
         model: User,
-        attributes: ["user_name"],
+        attributes: ["name"],
       },
     ],
   });
-});
-
-//Get one blog post by id
-router.get("/:id", async (req, res) => {
-  try {
-    const blogPostData = await BlogPost.findByPk(req.params.id, {
-      include: [
-        {
-          model: BlogPost,
-        },
-        {
-          model: Comment,
-          attributes: ["blogPost_id"],
-        },
-      ],
-    });
-
-    if (!blogPostData) {
-      res.status(404).json({ message: "No blog post found with that id." });
-      return;
-    }
-
-    res.status(200).json(blogPostData);
-  } catch (err) {
-    console.log(err);
-    res.status(500).json(err);
-  }
 });
 
 //Create a new post
