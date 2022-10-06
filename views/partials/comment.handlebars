@@ -1,0 +1,27 @@
+{{! Comment form }}
+{{#if blogPost.comments}}
+    <div>
+      Comments
+    </div>
+    {{#each blogPost.comments}}
+      <div>
+        <p>Posted by
+          {{user.name}}
+          on
+          {{format_date createdAt}}</p>
+      </div>
+      <div class="col-md-7">
+        <p>
+          {{body}}
+        </p>
+      </div>
+    {{/each}}
+  {{/if}}
+</div>
+<form id="form">
+  Care to comment?
+  <br />
+  <textarea name="comment-body"></textarea>
+  <br />
+  <button id="submit">Submit</button>
+</form>
