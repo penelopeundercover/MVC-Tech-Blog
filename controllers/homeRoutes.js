@@ -4,19 +4,9 @@ const withAuth = require("../utils/auth");
 
 //Get all blog posts
 router.get("/", async (req, res) => {
-  console.log("dinosaurs");
   try {
     const blogPostData = await BlogPost.findAll({
-      include: [
-        {
-          model: Comment,
-          attributes: ["blogPost_id"],
-        },
-        {
-          model: User,
-          attributes: ["name"],
-        },
-      ],
+      include: [User],
     });
 
     //Serialize data so the template can read it
@@ -87,7 +77,6 @@ router.get("/login", (req, res) => {
 
 //Get one blog post by id
 router.get("/blogPost/:id", async (req, res) => {
-  console.log(req.params.id);
   try {
     const blogPostData = await BlogPost.findByPk(req.params.id, {
       include: [
@@ -98,8 +87,6 @@ router.get("/blogPost/:id", async (req, res) => {
         },
       ],
     });
-
-    console.log(blogPostData);
 
     if (!blogPostData) {
       res.status(404).json({ message: "No blog post found with that id." });

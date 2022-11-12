@@ -1,50 +1,39 @@
 const router = require("express").Router();
-const { User, BlogPost, Comment } = require("../../models");
+const { BlogPost } = require("../../models");
+const withAuth = require("../../utils/auth");
 
 //Get all blog posts
-router.get("/", async (req, res) => {
-  const blogPostData = await BlogPost.findAll({
-    include: [
-      {
-        model: BlogPost,
-      },
-
-      {
-        model: User,
-        attributes: ["name"],
-      },
-    ],
-  });
+router.get("/", (req, res) => {
+  BlogPost.findAll()
+    .then((blogPostData) => res.json(blogPostData))
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
 });
 
 //Create a new post
-router.post("/", async (req, res) => {
+router.post("/", withAuth, async (req, res) => {
   try {
     const blogPostData = await BlogPost.create({
-      blogPost_title: req.body.blogPost_title,
-      blogPost_body: req.body.blogPost_body,
+      ...body,
+      userId: req.session.userId,
     });
-    res.status(200).json(blogPostData);
+    res.json(blogPostData);
   } catch (err) {
-    console.log(err);
     res.status(400).json(err);
+    res.status(500).json(err);
   }
 });
 
 //Update a blog post by its id
-router.put("/:id", async (req, res) => {
+router.put("/:id", withAuth, async (req, res) => {
   try {
-    const blogPostData = await BlogPost.update(
-      {
-        blogPost_title: req.body.blogPost_title,
-        blogPost_body: req.body.blogPost_body,
+    const blogPostData = await BlogPost.update(req.body, {
+      where: {
+        id: req.params.id,
       },
-      {
-        where: {
-          id: req.params.id,
-        },
-      }
-    );
+    });
     if (!blogPostData) {
       res.status(404).json({ message: "No blog post found with this id." });
       return;
@@ -58,7 +47,7 @@ router.put("/:id", async (req, res) => {
 });
 
 //Delete a blog post by its id
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", withAuth, async (req, res) => {
   try {
     const blogPostData = await BlogPost.destroy({
       where: {
