@@ -2,7 +2,7 @@ const router = require("express").Router();
 const { User, BlogPost, Comment } = require("../models");
 const withAuth = require("../utils/auth");
 
-//Get all blog posts
+//Get all blog posts on the homepage
 router.get("/", async (req, res) => {
   try {
     const blogPostData = await BlogPost.findAll({
@@ -17,7 +17,7 @@ router.get("/", async (req, res) => {
     console.log(blogPosts);
 
     //Pass serialized data and session flag into template
-    res.render("blogPosts", {
+    res.render("homepage", {
       blogPosts,
       logged_in: req.session.logged_in,
     });
@@ -27,7 +27,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-//If they're logged in, route to the homepage. If not, route to the login page.
+//If they're logged in, route to the homepage, where they can view posts. If not, route to the login page.
 router.get("/login", async (req, res) => {
   if (req.session.logged_in) {
     res.redirect("/");
