@@ -13,15 +13,19 @@ router.get("/", (req, res) => {
 });
 
 //Create a new post
-router.post("/", withAuth, async (req, res) => {
+// router.post("/", withAuth, async (req, res) => {
+router.post("/", async (req, res) => {
+  console.log("dinosaurs");
+  console.log(req.body);
   try {
     const blogPostData = await BlogPost.create({
-      ...body,
-      userId: req.session.userId,
+      ...req.body,
+      // userId: req.session.userId,
+      userId: 27,
     });
     res.json(blogPostData);
   } catch (err) {
-    res.status(400).json(err);
+    console.log(err);
     res.status(500).json(err);
   }
 });
